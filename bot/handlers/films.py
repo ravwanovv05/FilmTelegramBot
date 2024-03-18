@@ -99,8 +99,11 @@ async def searched_films_handler(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['search'] = message.text
     search_film = data['search']
+    if len(list(chain(*data['message']['reply_markup']['inline_keyboard']))) == 0:
+        bot.send_message(message.from_user.id, "Afsuski xech narsa topilmadi 😔")
+    else:
+        await bot.send_message(message.from_user.id, "Topilgan ma'lumotlar 🎞", reply_markup=searched_film_button(1, search_film))
     await state.finish()
-    await bot.send_message(message.from_user.id, "Topilgan ma'lumotlar 🎞", reply_markup=searched_film_button(1, search_film))
 
 
 async def next_prev_film_search_handler(query: types.CallbackQuery):

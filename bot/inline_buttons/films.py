@@ -99,6 +99,11 @@ def searched_film_button(page_num, search_film):
     start_index = (page_num - 1) * items_per_page
     end_index = min((start_index + items_per_page), len(film_list))
 
+    if len(film_list) == 0:
+        design.append([InlineKeyboardButton('❌', callback_data="delete_searched_films")])
+        ikm = InlineKeyboardMarkup(inline_keyboard=design)
+        return ikm
+
     for i in range(start_index, end_index):
         film_name.append(
             InlineKeyboardButton(
